@@ -26,7 +26,12 @@ angular.module('jetgrizzlyApp')
 
     $scope.addToQueue = function(item) {
       console.log('Link added: '+item);
-      $scope.queue.$add(item).then(function(){
+      var queueItem = {
+        url: item,
+        upvotes: [],
+        downvotes: []
+      };
+      $scope.queue.$add(queueItem).then(function(){
         console.log('scope.item', $scope.item);
         $scope.item = '';
         $scope.queueForm.$setPristine();

@@ -10,10 +10,28 @@ $queueBarMargin: 8px;
 
 .fullsize {
   min-height: 600px;
+  overflow: hidden;
 }
 .playback {
   text-align: center;
-  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 100px darken(#fff, 65%);
+  &:after {
+    -webkit-animation: grain 5s steps(10) infinite;
+    -moz-animation: grain 5s steps(10) infinite;
+    -ms-animation: grain 5s steps(10) infinite;
+    animation: grain 5s steps(10) infinite;
+    background: url(http://cl.ly/image/2m2R0A3m1b3x/noise.png);
+    content: "";
+    display: block;
+    overflow: hidden;
+    height: 300%;
+    left: -100%;
+    position: absolute;
+    top: -100%;
+    width: 300%;
+    z-index: 1;
+  }
 }
 div.usercount {
   text-align: center;
@@ -34,6 +52,7 @@ button.submit {
   background:fade-out(black,0.5);
   min-height: 500px;
   display: block;
+  z-index: 5;
 }
 .chat-messages{
   margin:15px;
@@ -66,10 +85,8 @@ button.submit {
 }
 .room-content{
   position:relative;
-  overflow-y:auto;
-  background-image: url('../images/CinemaBackground.jpg');
-  background-size: 100%;
-  background-repeat:no-repeat;
+  overflow: hidden;
+  background: $navbar-inverse-bg;
   padding-left: 0;
   padding-right: 0;
 }
@@ -79,23 +96,6 @@ button.submit {
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
-}
-
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-
-  /* Make the masthead heading the same height as the navigation */
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-  }
-}
-
-.container-narrow > hr {
-  margin: 30px 0;
 }
 
 /* NEW STYLES */
@@ -149,7 +149,7 @@ body {
   letter-spacing: 0.1em;
 }
 @media screen and (min-width: 768px) {
-  .equal, .equal > div[class*='col-'] {  
+  .equal, .equal > div[class*='col-'] {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -162,7 +162,8 @@ body {
   }
 }
 .videoarea {
-  min-height: 540px;
+  height: 540px;
+  overflow: hidden;
 }
 .videobottom {
   margin-top: 0;
@@ -180,14 +181,18 @@ body {
   min-height: $queueBarHeight;
   line-height: $queueBarHeight;
   font-size: 1.5em;
+  text-align: center;
 }
 .queueInput {
+  background: $kuler-second;
   margin: 0;
   padding: 0;
   min-height: $queueBarHeight;
+  border: 0;
   input[type=text] {
     font-size: 1.5em;
     margin: $queueBarMargin 0 $queueBarMargin 0;
+    margin-left: 10px;
     min-height: $queueBarHeight - (2* $queueBarMargin);
     line-height: 100%;
     width: 100%;
@@ -207,16 +212,279 @@ body {
   }
 }
 .msggroup {
-  background: inherit;
+  background: $kuler-second;
   border: none;
   padding: 0;
 }
 .sendbutton {
   background: $kuler-second;
-  padding: 18px 26px;
+  padding: 18px 20px;
   text-transform: uppercase;
   border: none;
   &:hover {
     background: $kuler-second;
+  }
+}
+.queuearea {
+  z-index: 5;
+  background: #151C23;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 0;
+}
+
+.blkbg {
+  background: #151C23;
+}
+.secondclr {
+  background: $kuler-second;
+}
+
+@-webkit-keyframes grain {
+  0%, 100% {
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    -moz-transform: translate(-5%, -10%);
+    -ms-transform: translate(-5%, -10%);
+    -webkit-transform: translate(-5%, -10%);
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    -moz-transform: translate(-15%, 5%);
+    -ms-transform: translate(-15%, 5%);
+    -webkit-transform: translate(-15%, 5%);
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    -moz-transform: translate(7%, -25%);
+    -ms-transform: translate(7%, -25%);
+    -webkit-transform: translate(7%, -25%);
+    transform: translate(7%, -25%);
+  }
+  40% {
+    -moz-transform: translate(-5%, 25%);
+    -ms-transform: translate(-5%, 25%);
+    -webkit-transform: translate(-5%, 25%);
+    transform: translate(-5%, 25%);
+  }
+  50% {
+    -moz-transform: translate(-15%, 10%);
+    -ms-transform: translate(-15%, 10%);
+    -webkit-transform: translate(-15%, 10%);
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    -moz-transform: translate(15%, 0%);
+    -ms-transform: translate(15%, 0%);
+    -webkit-transform: translate(15%, 0%);
+    transform: translate(15%, 0%);
+  }
+  70% {
+    -moz-transform: translate(0%, 15%);
+    -ms-transform: translate(0%, 15%);
+    -webkit-transform: translate(0%, 15%);
+    transform: translate(0%, 15%);
+  }
+  80% {
+    -moz-transform: translate(3%, 35%);
+    -ms-transform: translate(3%, 35%);
+    -webkit-transform: translate(3%, 35%);
+    transform: translate(3%, 35%);
+  }
+  90% {
+    -moz-transform: translate(-10%, 10%);
+    -ms-transform: translate(-10%, 10%);
+    -webkit-transform: translate(-10%, 10%);
+    transform: translate(-10%, 10%);
+  }
+}
+@-moz-keyframes grain {
+  0%, 100% {
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    -moz-transform: translate(-5%, -10%);
+    -ms-transform: translate(-5%, -10%);
+    -webkit-transform: translate(-5%, -10%);
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    -moz-transform: translate(-15%, 5%);
+    -ms-transform: translate(-15%, 5%);
+    -webkit-transform: translate(-15%, 5%);
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    -moz-transform: translate(7%, -25%);
+    -ms-transform: translate(7%, -25%);
+    -webkit-transform: translate(7%, -25%);
+    transform: translate(7%, -25%);
+  }
+  40% {
+    -moz-transform: translate(-5%, 25%);
+    -ms-transform: translate(-5%, 25%);
+    -webkit-transform: translate(-5%, 25%);
+    transform: translate(-5%, 25%);
+  }
+  50% {
+    -moz-transform: translate(-15%, 10%);
+    -ms-transform: translate(-15%, 10%);
+    -webkit-transform: translate(-15%, 10%);
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    -moz-transform: translate(15%, 0%);
+    -ms-transform: translate(15%, 0%);
+    -webkit-transform: translate(15%, 0%);
+    transform: translate(15%, 0%);
+  }
+  70% {
+    -moz-transform: translate(0%, 15%);
+    -ms-transform: translate(0%, 15%);
+    -webkit-transform: translate(0%, 15%);
+    transform: translate(0%, 15%);
+  }
+  80% {
+    -moz-transform: translate(3%, 35%);
+    -ms-transform: translate(3%, 35%);
+    -webkit-transform: translate(3%, 35%);
+    transform: translate(3%, 35%);
+  }
+  90% {
+    -moz-transform: translate(-10%, 10%);
+    -ms-transform: translate(-10%, 10%);
+    -webkit-transform: translate(-10%, 10%);
+    transform: translate(-10%, 10%);
+  }
+}
+@-ms-keyframes grain {
+  0%, 100% {
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    -moz-transform: translate(-5%, -10%);
+    -ms-transform: translate(-5%, -10%);
+    -webkit-transform: translate(-5%, -10%);
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    -moz-transform: translate(-15%, 5%);
+    -ms-transform: translate(-15%, 5%);
+    -webkit-transform: translate(-15%, 5%);
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    -moz-transform: translate(7%, -25%);
+    -ms-transform: translate(7%, -25%);
+    -webkit-transform: translate(7%, -25%);
+    transform: translate(7%, -25%);
+  }
+  40% {
+    -moz-transform: translate(-5%, 25%);
+    -ms-transform: translate(-5%, 25%);
+    -webkit-transform: translate(-5%, 25%);
+    transform: translate(-5%, 25%);
+  }
+  50% {
+    -moz-transform: translate(-15%, 10%);
+    -ms-transform: translate(-15%, 10%);
+    -webkit-transform: translate(-15%, 10%);
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    -moz-transform: translate(15%, 0%);
+    -ms-transform: translate(15%, 0%);
+    -webkit-transform: translate(15%, 0%);
+    transform: translate(15%, 0%);
+  }
+  70% {
+    -moz-transform: translate(0%, 15%);
+    -ms-transform: translate(0%, 15%);
+    -webkit-transform: translate(0%, 15%);
+    transform: translate(0%, 15%);
+  }
+  80% {
+    -moz-transform: translate(3%, 35%);
+    -ms-transform: translate(3%, 35%);
+    -webkit-transform: translate(3%, 35%);
+    transform: translate(3%, 35%);
+  }
+  90% {
+    -moz-transform: translate(-10%, 10%);
+    -ms-transform: translate(-10%, 10%);
+    -webkit-transform: translate(-10%, 10%);
+    transform: translate(-10%, 10%);
+  }
+}
+@keyframes grain {
+  0%, 100% {
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    -moz-transform: translate(-5%, -10%);
+    -ms-transform: translate(-5%, -10%);
+    -webkit-transform: translate(-5%, -10%);
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    -moz-transform: translate(-15%, 5%);
+    -ms-transform: translate(-15%, 5%);
+    -webkit-transform: translate(-15%, 5%);
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    -moz-transform: translate(7%, -25%);
+    -ms-transform: translate(7%, -25%);
+    -webkit-transform: translate(7%, -25%);
+    transform: translate(7%, -25%);
+  }
+  40% {
+    -moz-transform: translate(-5%, 25%);
+    -ms-transform: translate(-5%, 25%);
+    -webkit-transform: translate(-5%, 25%);
+    transform: translate(-5%, 25%);
+  }
+  50% {
+    -moz-transform: translate(-15%, 10%);
+    -ms-transform: translate(-15%, 10%);
+    -webkit-transform: translate(-15%, 10%);
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    -moz-transform: translate(15%, 0%);
+    -ms-transform: translate(15%, 0%);
+    -webkit-transform: translate(15%, 0%);
+    transform: translate(15%, 0%);
+  }
+  70% {
+    -moz-transform: translate(0%, 15%);
+    -ms-transform: translate(0%, 15%);
+    -webkit-transform: translate(0%, 15%);
+    transform: translate(0%, 15%);
+  }
+  80% {
+    -moz-transform: translate(3%, 35%);
+    -ms-transform: translate(3%, 35%);
+    -webkit-transform: translate(3%, 35%);
+    transform: translate(3%, 35%);
+  }
+  90% {
+    -moz-transform: translate(-10%, 10%);
+    -ms-transform: translate(-10%, 10%);
+    -webkit-transform: translate(-10%, 10%);
+    transform: translate(-10%, 10%);
   }
 }

@@ -5,6 +5,8 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 @import "../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
 
 $chat-width: 400px;
+$queueBarHeight: 70px;
+$queueBarMargin: 8px;
 
 .fullsize {
   min-height: 600px;
@@ -37,7 +39,7 @@ button.submit {
   margin:15px;
   overflow-y:scroll;
   border-top: 10px;
-  max-height: 520px;
+  height: 510px;
   /*border-bottom: 1px solid rgba(255,255,255,0.45);*/
 }
 .chat-message{
@@ -55,7 +57,8 @@ button.submit {
     background:fade-out(black,0.7);
     border-radius: 0;
     border: none;
-    height: 60px;
+    height: $queueBarHeight;
+    font-size: 1.1em;
     &:focus {
       box-shadow: none;
     }
@@ -168,8 +171,6 @@ body {
   line-height: 100%;
 }
 
-$queueBarHeight: 70px;
-$queueBarMargin: 8px;
 
 .queue, .queueForm {
   padding-left: 0;
@@ -208,7 +209,14 @@ $queueBarMargin: 8px;
 .msggroup {
   background: inherit;
   border: none;
+  padding: 0;
 }
 .sendbutton {
-
+  background: $kuler-second;
+  padding: 18px 26px;
+  text-transform: uppercase;
+  border: none;
+  &:hover {
+    background: $kuler-second;
+  }
 }

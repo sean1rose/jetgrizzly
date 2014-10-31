@@ -1,1 +1,24 @@
-<h2> Welcome to your account page: {{user.email}}</h2>
+<h3 class="text-center">Change Password</h3>
+<form ng-controller="ChangePasswordController" ng-submit="changePassword()" class="row row-centered authformmain">
+  <div class="row row-centered">
+	  <div class="form-group col-xs-11 col-sm-6 col-md-5 col-centered">
+	    <label for="oldPassword">Enter your current password</label>
+	    <input name = 'oldPassword' type="password" class="form-control authform" name="oldpassword" ng-model="oldPass">
+	  </div>
+  </div>
+  <div class="row row-centered">
+	  <div class="form-group col-xs-11 col-sm-6 col-md-5 col-centered">
+	    <label for="userpass">Enter your new password</label>
+	    <input name="userpass" type="password" class="form-control authform" ng-model="newPass">
+	  </div>
+  </div>
+  <div class="row row-centered">
+	  <div class="form-group col-xs-11 col-sm-6 col-md-5 col-centered">
+	    <label for="userpassconfirm">Confirm your new password</label>
+	    <input name="userpassconfirm" type="password" class="form-control authform" ng-model="newPassConfirm">
+	  </div>
+  </div>
+  <div class="row row-centered">
+	  <button class="col-xs-10 col-sm-4 col-md-3 col-centered btn btn-primary authbtn" type="submit">Submit</button>
+  </div>
+</form>

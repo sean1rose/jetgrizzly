@@ -18,7 +18,8 @@ angular.module('jetgrizzlyApp', [
   'ui.bootstrap',
   'firebase',
   'ngLodash',
-  'config'
+  'config',
+  'luegg.directives'
 ])
   .config(function($stateProvider,$urlRouterProvider){
   $urlRouterProvider.otherwise('/');

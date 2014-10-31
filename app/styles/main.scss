@@ -1,7 +1,8 @@
-$icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+/* \$icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/"; */
 
+
+$icon-font-path: "../fonts/" !default;
 @import "bootstrap/variables.scss";
-
 @import "../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
 
 $chat-width: 400px;

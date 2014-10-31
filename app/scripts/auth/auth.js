@@ -60,7 +60,7 @@ module.controller('LogoutController', function (SimpleLogin, $state, $scope, $st
   });
 });
 module.factory('SimpleLogin', ['fbutil', '$timeout', '$window', '$firebaseSimpleLogin', '$rootScope', function (fbutil, $timeout, $window, $firebaseSimpleLogin, $rootScope) {
-  var auth = $firebaseSimpleLogin(fbutil.ref());
+  var auth = $firebaseSimpleLogin( fbutil.ref() );
   // when there is a change of state, check to see if there is user
   // and assign that user or null
   var statusChange = function() {
@@ -97,13 +97,20 @@ module.factory('SimpleLogin', ['fbutil', '$timeout', '$window', '$firebaseSimple
         });
     },
     changePassword: function(email, oldPassword, newPassword) {
-      auth.$changePassword(email, oldPassword, newPassword, function(error) {
-        if (error === null) {
-          console.log("password changed successfully");
-        } else {
-          console.log("Error changing password:", error);
-        }
-      });
+      return auth.$changePassword(email, oldPassword, newPassword)
+        .then(function() {
+          console.log('inside next function');
+          return alert("Password updated!")
+        }, function(error){
+          console.log(Error)
+        });
+      //  function(error) {
+      //   if (error === null) {
+      //     console.log("password changed successfully");
+      //   } else {
+      //     console.log("Error changing password:", error);
+      //   }
+      // })
     }
   };
   // listens for a click of login or logout and then checks if user exists

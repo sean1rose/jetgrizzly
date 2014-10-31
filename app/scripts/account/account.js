@@ -20,8 +20,9 @@ module.controller('ChangePasswordController', function (SimpleLogin, userPresenc
 			console.log('new password ok');
 			console.log($scope.user.email, $scope.oldPass, $scope.newPass);
 			console.log('about to run SimpleLogin.changePassword($scope.user.email, $scope.oldPass, $scope.newPass)');
-			debugger;
-			SimpleLogin.changePassword($scope.user.email, $scope.oldPass, $scope.newPass);
+			// debugger;
+			console.log(SimpleLogin.changePassword($scope.user.email, $scope.oldPass, $scope.newPass))
+			SimpleLogin.changePassword($scope.user.email, $scope.oldPass, $scope.newPass)
 		} else {
 			console.log('Your new passwords do not match')
 		}

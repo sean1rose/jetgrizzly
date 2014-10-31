@@ -15,6 +15,6 @@ angular.module('firebase.utils', ['firebase', 'jetgrizzlyApp'])
   	}
   };
 	return {
-		ref2: firebaseRef
+		ref: firebaseRef
 	};
 });

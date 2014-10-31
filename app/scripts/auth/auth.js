@@ -60,7 +60,7 @@ module.controller('LogoutController', function (SimpleLogin, $state, $scope, $st
   });
 });
 module.factory('SimpleLogin', ['fbutil', '$timeout', '$window', '$firebaseSimpleLogin', '$rootScope', function (fbutil, $timeout, $window, $firebaseSimpleLogin, $rootScope) {
-  var auth = $firebaseSimpleLogin(fbutil.ref2());
+  var auth = $firebaseSimpleLogin(fbutil.ref());
   // when there is a change of state, check to see if there is user
   // and assign that user or null
   var statusChange = function() {

@@ -62,6 +62,32 @@ module.exports = function (grunt) {
       }
     },
 
+    ngconstant: {
+      options: {
+        wrap: '"use strict";\n\n{%= __ngModule %}',
+        name: 'config',
+        dest: '<%= yeoman.app %>/scripts/config.js'
+      },
+      dist: {
+        constants: {
+          apikeys: {
+            YOUTUBE_API_KEY: 'AIzaSyDcrxqaINGpjBDMhTxEq8hdJPEbSjnmc6Y'
+          }
+        }
+      },
+      dev: {
+        constants: function(){
+          var ret = {};
+          if (grunt.file.exists('dev.json')){
+            ret.apikeys = grunt.file.readJSON('dev.json');
+          } else {
+            ret.apikeys = {};
+          }
+          return ret;
+        }()
+      }
+    },
+
     // The actual grunt server settings
     connect: {
       options: {
@@ -136,13 +162,22 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             '.tmp',
+            '<%= yeoman.app %>/scripts/config.js',
             '<%= yeoman.dist %>/*',
             '!<%= yeoman.dist %>/.git*',
             '!<%= yeoman.dist %>/Procfile'
           ]
         }]
       },
-      server: '.tmp'
+      server: {
+        files: [{
+          src: [
+            '.tmp',
+            '<%= yeoman.app %>/scripts/config.js'
+          ],
+          dot: true
+        }]
+      }
     },
 
     // Add vendor prefixed styles
@@ -173,12 +208,9 @@ module.exports = function (grunt) {
     },
     // Compiles Sass to CSS
     sass: {
-      server: {
+      dist: {
         options: {
-          loadPath: [
-            '<%= yeoman.app %>/styles',
-          ],
-          compass: false
+          loadPath: ['<%= yeoman.app %>/styles']
         },
         files: {
           '.tmp/styles/main.css' : '<%= yeoman.app %>/styles/main.scss'
@@ -222,35 +254,9 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/client/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/client/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>/client','<%= yeoman.dist %>/client/images']
+        assetsDirs: ['<%= yeoman.dist %>/client','<%= yeoman.dist %>/client/images','<%= yeoman.dist =>/client/styles/fonts']
       }
     },
-
-    // The following *-min tasks will produce minified files in the dist folder
-    // By default, your `index.html`'s <!-- Usemin block --> will take care of
-    // minification. These next options are pre-configured if you do not wish
-    // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
 
     imagemin: {
       dist: {
@@ -339,16 +345,15 @@ module.exports = function (grunt) {
           src: [
           'package.json',
           'index.js',
-          'Procfile',
+          'Procfile'
           ],
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,
           cwd: '.',
-          src: [
-          'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*'
-          ],
-          dest: '<%= yeoman.dist %>/client'
+          dot: true,
+          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+          dest: '<%= yeoman.dist %>/client/fonts'
         }]
       },
       styles: {
@@ -421,6 +426,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'ngconstant:dev',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -433,16 +439,21 @@ module.exports = function (grunt) {
     grunt.task.run(['serve:' + target]);
   });
 
-  grunt.registerTask('test', [
+  grunt.registerTask('pretest', [
     'clean:server',
-    'concurrent:test',
-    'autoprefixer',
+    'ngconstant:dist',
+    'concurrent:test'
+  ]);
+
+  grunt.registerTask('test', [
+    'pretest',
     'connect:test',
     'karma'
   ]);
 
   grunt.registerTask('build', [
     'clean:dist',
+    'ngconstant:dist',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',

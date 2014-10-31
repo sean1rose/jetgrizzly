@@ -14,9 +14,12 @@ var server = require('http').createServer(app);
 server.listen(port, ip, function () {
   console.log('Express server listening on %d!', port);
 });
-var config = {firebase:{url:'https://blistering-heat-6745.firebaseio.com'}};
+var config = {firebase:{url:'https://queuetube.firebaseio.com'}};
 var queueRef = new Firebase(config.firebase.url+'/queue/');
 var videoRef = new Firebase(config.firebase.url+'/youTube/');
+
+// will contain count property and users property
+var skipRef = new Firebase(config.firebase.url+'/skip/');
 
 var getVideoData = function(video,cb){
   http.get(youtubeData + video + youtubeQueryParams,function(res){
@@ -46,7 +49,7 @@ var handleNextQueueItem = function(queueSnapshot){
     });
   }else{
     console.log('OK there is a video in the queue so lets use it.');
-    var nextID = queueSnapshot.val().split('v=')[1];
+    var nextID = queueSnapshot.val().url.split('v=')[1];
     var nextName = queueSnapshot.name();
     videoRef.set({currentVideo:nextID,isPlaying:true,startTime:Date.now()},function(){
       var remove = new Firebase(config.firebase.url+'/queue/'+nextName);
@@ -77,6 +80,10 @@ var checkCurrentVideo = function(){
     getVideoData(currentVideo.currentVideo,function(res){
       var endTime = currentVideo.startTime+res.data.duration*1000;
       var remaining = endTime - Date.now();
+
+
+      // once skipRef.count
+      // if skipRef.count > # of users / 2 + 1
 
       if(remaining < 0){
         // handle the next item on the queue if any

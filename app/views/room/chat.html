@@ -1,5 +1,5 @@
 <div class="row">
-<ul class="list-unstyled chat-messages col-xs-12">
+<ul class="list-unstyled chat-messages col-xs-12" scroll-glue="glued">
   <li class="chat-message" ng-model="messages" ng-repeat="message in messages">
     {{message.user}}: {{message.text}}
   </li>

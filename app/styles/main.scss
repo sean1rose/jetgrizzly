@@ -33,6 +33,24 @@ $queueBarMargin: 8px;
     z-index: 1;
   }
 }
+.ytvideo {
+  position: relative;
+  z-index: 30;
+  top: 13%;
+  &:after {
+    content:'';
+    display: block;
+    position: absolute;
+    left: 5%;
+    bottom: 10px;
+    width: 90%;
+    max-width: 640px;
+    height: 15px;
+    background: transparent;
+    border-radius: 80px;
+    box-shadow: 0 25px 40px rgba(0,0,0,0.8);
+  }
+}
 div.usercount {
   text-align: center;
 }

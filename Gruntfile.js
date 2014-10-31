@@ -106,6 +106,10 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
+              connect().use(
+                '/fonts',
+                connect.static('./bower_components/bootstrap-sass-official/assets/fonts/bootstrap')
+              ),
               connect.static(appConfig.app)
             ];
           }
@@ -357,9 +361,9 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,
-          cwd: '.',
+          cwd: './bower_components/bootstrap-sass-official/assets/fonts/bootstrap',
           dot: true,
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+          src: '*',
           dest: '<%= yeoman.dist %>/client/fonts'
         }]
       },

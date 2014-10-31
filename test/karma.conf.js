@@ -27,6 +27,7 @@ module.exports = function(config) {
       'bower_components/mockfirebase/dist/mockfirebase.js',
       'bower_components/angularfire/dist/angularfire.min.js',
       'bower_components/ng-lodash/build/ng-lodash.min.js',
+      'bower_components/angularjs-scroll-glue/src/scrollglue.js',
       'app/scripts/config.js',
       'app/scripts/app.js',
       'app/scripts/**/*.js',

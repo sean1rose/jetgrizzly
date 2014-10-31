@@ -10,7 +10,13 @@ module.config(function($stateProvider) {
     templateUrl:'views/account/account.html',
     controller:function($scope, user) {
       $scope.user = user;
+
     }
   });
 });
+module.controller('ChangePasswordController', function (SimpleLogin, $state, $scope){
+	$scope.changePassword = function(){
+		console.log($scope.user)
+	}
+})
 })();

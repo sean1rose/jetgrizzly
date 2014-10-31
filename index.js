@@ -83,11 +83,6 @@ var checkCurrentVideo = function(){
       var endTime = currentVideo.startTime+res.data.duration*1000;
       console.log("currentVideo.startTime in index.js file is ", currentVideo.startTime);
       var remaining = endTime - Date.now();
-
-
-      // once skipRef.count
-      // if skipRef.count > # of users / 2 + 1
-
       if(remaining < 0){
         // handle the next item on the queue if any
         queueRef.startAt().limit(1).once('child_added',handleNextQueueItem);

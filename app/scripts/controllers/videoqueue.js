@@ -17,14 +17,13 @@ angular.module('jetgrizzlyApp')
     'config',
     '$firebase',
     'youtubeVideoApi',
-    'lodash', function ($rootScope, $scope, userPresence, $window, config, $firebase, youtubeVideoApi, lodash) {
+    'lodash', function ($rootScope, $scope, SimpleLogin, userPresence, $window, config, $firebase, youtubeVideoApi, lodash) {
     // declare variables
     $scope.totalUsers = 0;
 
     var queueRef = new $window.Firebase(config.firebase.url+'/queue/');
     var sync = $firebase(queueRef);
     $scope.queue = sync.$asArray();
-
 
     var skipRef = new $window.Firebase(config.firebase.url+'/skip/');
     var skipSync = $firebase(skipRef);
@@ -75,17 +74,23 @@ angular.module('jetgrizzlyApp')
         console.error('Not a valid URL');
       }
     };
+
     // EL: once skip count is reached, change current vid's start time to -1, which should prompt index.js to handle next queue item
     $scope.$on('onSkipCountReached', function(){
       console.log('WE ARE IN THE skipCountReached E-L');
       utRef.on('value', function(snap){
         //var utObj = snap.val();
         console.log('utobj? - ', utObj);
+
+        // change whatever needs to be changed in the youTube Firebase object in order to queue up next video (startTime?)
         utObj.startTime = -1;
         console.log('startTime is!!! - ', utObj.startTime);
+
+        // upon saving the changes to firebase...
         utObj.$save().then(function(){
+          // grab user id from Simple Login again
           var username = $scope.user.id;
-          console.log('start time change saved successfully');
+          console.log('next vid loaded successfully / start time change saved successfully');
           // want to change skip obj - counter back to 0
           $scope.skipObject.counter = 0;
           $scope.skipObject[username] = false;
@@ -96,7 +101,7 @@ angular.module('jetgrizzlyApp')
 
     // add to skip counter when skip button is clicked
     $scope.skip = function(){
-      // currently-logged-in user
+      // currently-logged-in user (using native AngularFire SimpleLogin)
       var username = $scope.user.id;
       console.log($scope.user.id);
       console.log('# of users is - ', userPresence.getOnlineUserCount());

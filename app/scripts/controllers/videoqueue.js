@@ -23,24 +23,16 @@ angular.module('jetgrizzlyApp')
 
     var queueRef = new $window.Firebase(config.firebase.url+'/queue/');
     var sync = $firebase(queueRef);
+    $scope.queue = sync.$asArray();
 
 
     var skipRef = new $window.Firebase(config.firebase.url+'/skip/');
     var skipSync = $firebase(skipRef);
     $scope.skipObject = skipSync.$asObject();
     
-    // https://www.firebase.com/blog/2014-07-30-introducing-angularfire-08.html
-    // create a read-only firebase array
-    // $scope.queue = sync.$asArray();
-
-    // creates a syncrhonized object (downloads the firebase data into a local object)
-    //$scope.skip = skipSync.$asObject();
-    // should i use the same name to refer to this object as one that's used in index.js? skipObject vs skipRef
-
-    // synchronizes the object w/ 3-way data binding
-    // skipObject.$bindTo($scope, 'data');
-
-
+    var utRef = new $window.Firebase(config.firebase.url+'/youTube');
+    var utSync = $firebase(utRef);
+    var utObj = utSync.$asObject();
 
     // listen for new users to lobby (emitted from UserPresenceFactory)
     $scope.$on('onOnlineUser', function() {
@@ -83,25 +75,40 @@ angular.module('jetgrizzlyApp')
         console.error('Not a valid URL');
       }
     };
+    // EL: once skip count is reached, change current vid's start time to -1, which should prompt index.js to handle next queue item
+    $scope.$on('onSkipCountReached', function(){
+      console.log('WE ARE IN THE skipCountReached E-L');
+      utRef.on('value', function(snap){
+        //var utObj = snap.val();
+        console.log('utobj? - ', utObj);
+        utObj.startTime = -1;
+        console.log('startTime is!!! - ', utObj.startTime);
+        utObj.$save().then(function(){
+          var username = $scope.user.id;
+          console.log('start time change saved successfully');
+          // want to change skip obj - counter back to 0
+          $scope.skipObject.counter = 0;
+          $scope.skipObject[username] = false;
+          $scope.skipObject.$save().then(console.log('counter reset correctly', $scope.skipObject.counter))
+        });
+      });
+    });
 
+    // add to skip counter when skip button is clicked
     $scope.skip = function(){
-      // adds to the count (make changes to the data)
       // currently-logged-in user
       var username = $scope.user.id;
       console.log($scope.user.id);
-      console.log('# of users is ', userPresence.getOnlineUserCount())
+      console.log('# of users is - ', userPresence.getOnlineUserCount());
 
       // if current user hasn't already voted, add to skip counter
       if ($scope.skipObject[username] !== true){
         ++$scope.skipObject.counter;
+        // uncomment line below in order to prevent same user from voting on skipping more than once
         $scope.skipObject[username] = true;
       }
       // pushes changes made to the firebase-server
       $scope.skipObject.$save().then();
-
-
-      // once skip count reaches a certain # --> want to play next video (handle that in index.js???)
-      // when a new vid is played, want the counts (skip and userid) to start over
     };
 
   }]);

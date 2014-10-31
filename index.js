@@ -49,8 +49,9 @@ var handleNextQueueItem = function(queueSnapshot){
     });
   }else{
     console.log('OK there is a video in the queue so lets use it.');
-    var nextID = queueSnapshot.val().url.split('v=')[1];
+    var nextID = queueSnapshot.val().split('v=')[1];
     var nextName = queueSnapshot.name();
+    // set the youtube firebase's current video to be the next video in the queue (moves queue item into currentVideo) --> runs checkCurrentVideo()
     videoRef.set({currentVideo:nextID,isPlaying:true,startTime:Date.now()},function(){
       var remove = new Firebase(config.firebase.url+'/queue/'+nextName);
       remove.remove(function(){
@@ -64,6 +65,7 @@ var handleNextQueueItem = function(queueSnapshot){
 };
 // checks to see if current video must be removed (finished playing)
 var checkCurrentVideo = function(){
+  // check the youtube vid-database...
   videoRef.once('value', function (snapshot) {
 
     // get the current video with its starting time
@@ -79,6 +81,7 @@ var checkCurrentVideo = function(){
     // get the video data
     getVideoData(currentVideo.currentVideo,function(res){
       var endTime = currentVideo.startTime+res.data.duration*1000;
+      console.log("currentVideo.startTime in index.js file is ", currentVideo.startTime);
       var remaining = endTime - Date.now();
 
 

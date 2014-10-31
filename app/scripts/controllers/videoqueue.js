@@ -9,7 +9,15 @@
  */
 (function(){
 angular.module('jetgrizzlyApp')
-  .controller('VideoQueueController', ['$rootScope', '$scope', 'userPresence', '$window', 'config', '$firebase', function ($rootScope, $scope, userPresence, $window, config, $firebase) {
+  .controller('VideoQueueController', [
+    '$rootScope',
+    '$scope',
+    'userPresence',
+    '$window',
+    'config',
+    '$firebase',
+    'youtubeVideoApi',
+    'lodash', function ($rootScope, $scope, userPresence, $window, config, $firebase, youtubeVideoApi, lodash) {
     // declare variables
     $scope.totalUsers = 0;
 
@@ -24,20 +32,39 @@ angular.module('jetgrizzlyApp')
       });
     });
 
-    $scope.addToQueue = function(item) {
-      console.log('Link added: '+item);
-      var queueItem = {
-        url: item,
-        upvotes: [],
-        downvotes: []
-      };
-      $scope.queue.$add(queueItem).then(function(){
-        console.log('scope.item', $scope.item);
-        $scope.item = '';
-        $scope.queueForm.$setPristine();
-        console.log('Queue size: '+$scope.queue.length+'; Player is in state: '+$scope.playerState);
-      });
+    $scope.addToQueue = function(url) {
+      var id = youtubeVideoApi.getIdFromUrl(url);
+      if (id){
+        if (!lodash.contains(lodash.pluck($scope.queue, 'id'), id)) {
+          youtubeVideoApi.getVideoData(id).then(function (data) {
+            return {
+                url: url,
+                id: id,
+                upvotes: [],
+                downvotes: [],
+                info: lodash.cloneDeep(data.snippet)
+              };
+            }).then(function (item) {
+              return $scope.queue.$add(item);
+            }).then(function(ref) {
+            return $firebase(ref).$asObject().$loaded();
+          }).then(function(item){
+            console.log(item.info.title, 'added to queue');
+            $scope.item = '';
+            $scope.queueForm.$setPristine();
+          })
+              .catch(function (err) {
+              // do something fancy
+              console.error(err);
+            });
+        } else {
+          // do something fancy
+          console.error('Video already in queue')
+        }
+      } else {
+        // do something fancy
+        console.error('Not a valid URL');
+      }
     };
   }]);
-
 })();

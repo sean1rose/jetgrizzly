@@ -6,7 +6,7 @@ angular.module('jetgrizzlyApp')
 
 .factory('youtubeVideoApi', function ($http, lodash, apikeys) {
 
-    var apiKey = apikeys.YOUTUBE_API_KEY || 'AIzaSyDcrxqaINGpjBDMhTxEq8hdJPEbSjnmc6Y';
+    var apiKey = apikeys.YOUTUBE_API_KEY;
 
     var youtube = {
       videos: {

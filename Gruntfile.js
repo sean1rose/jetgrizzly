@@ -68,10 +68,23 @@ module.exports = function (grunt) {
         name: 'config',
         dest: '<%= yeoman.app %>/scripts/config.js'
       },
-      dev: {
+      dist: {
         constants: {
-          apikeys: grunt.file.readJSON('dev.json')
+          apikeys: {
+            YOUTUBE_API_KEY: 'AIzaSyDcrxqaINGpjBDMhTxEq8hdJPEbSjnmc6Y'
+          }
         }
+      },
+      dev: {
+        constants: function(){
+          var ret = {};
+          if (grunt.file.exists('dev.json')){
+            ret.apikeys = grunt.file.readJSON('dev.json');
+          } else {
+            ret.apikeys = {};
+          }
+          return ret;
+        }()
       }
     },
 
@@ -149,13 +162,22 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             '.tmp',
+            '<%= yeoman.app %>/scripts/config.js',
             '<%= yeoman.dist %>/*',
             '!<%= yeoman.dist %>/.git*',
             '!<%= yeoman.dist %>/Procfile'
           ]
         }]
       },
-      server: '.tmp'
+      server: {
+        files: [{
+          src: [
+            '.tmp',
+            '<%= yeoman.app %>/scripts/config.js'
+          ],
+          dot: true
+        }]
+      }
     },
 
     // Add vendor prefixed styles
@@ -232,7 +254,7 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/client/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/client/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>/client','<%= yeoman.dist %>/client/images','<%= yeoman.dist =>/styles/fonts']
+        assetsDirs: ['<%= yeoman.dist %>/client','<%= yeoman.dist %>/client/images','<%= yeoman.dist =>/client/styles/fonts']
       }
     },
 
@@ -419,8 +441,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('pretest', [
     'clean:server',
-    'concurrent:test',
-    'ngconstant:dev'
+    'ngconstant:dist',
+    'concurrent:test'
   ]);
 
   grunt.registerTask('test', [
@@ -429,15 +451,9 @@ module.exports = function (grunt) {
     'karma'
   ]);
 
-  grunt.registerTask('travistest', [
-    'clean:server',
-    'concurrent:test',
-    'connect:test',
-    'karma'
-  ]);
-
   grunt.registerTask('build', [
     'clean:dist',
+    'ngconstant:dist',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',

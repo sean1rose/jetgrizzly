@@ -14,8 +14,8 @@ module.config(function($stateProvider) {
 module.controller('ChangePasswordController', function (SimpleLogin, $location, userPresence, $state, $scope){
 	$scope.changePassword = function(){
 		if($scope.newPass === $scope.newPassConfirm){
-			SimpleLogin.changePassword($scope.user.email, $scope.oldPass, $scope.newPass)
-			$location.path('/')
+			SimpleLogin.changePassword($scope.user.email, $scope.oldPass, $scope.newPass);
+			$location.path('/');
 		} else {
 			alert('Your new passwords do not match')
 			$scope.newPass = '';

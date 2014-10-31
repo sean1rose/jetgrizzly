@@ -21,8 +21,8 @@ describe('SimpleLogin', function() {
 	});
   //put things back to the way they were before, no more mock
 	afterEach(function() {
-		Firebase = MockFirebase._origFirebase;
-		FirebaseSimpleLogin = MockFirebase._origFirebaseSimpleLogin;
+		window.Firebase = MockFirebase._origFirebase;
+		window.FirebaseSimpleLogin = MockFirebase._origFirebaseSimpleLogin;
 	});
 	describe('login', function() {
 		it ('should return user if $firebaseSimpleLogin.$login succeeds',
@@ -41,7 +41,7 @@ describe('SimpleLogin', function() {
       inject(function($q, SimpleLogin) {
         //create random "bare" spy because there is not a function to spy on
         var cb = jasmine.createSpy('reject');
-        authStub.$$last.$login.andReturn($q.reject('test_error', null));
+        authStub.$$last.$login.and.returnValue($q.reject('test_error', null));
         SimpleLogin.login('test@test.com', '123').catch(cb);
         flush();
         expect(cb).toHaveBeenCalledWith('test_error');
@@ -71,7 +71,7 @@ describe('SimpleLogin', function() {
     it('should reject promise if error', function() {
       //create random "bare" spy because there is not a function to spy on
       var cb = jasmine.createSpy('reject');
-      $fsl.$createUser.andReturn($q.reject('test_error'));
+      $fsl.$createUser.and.returnValue($q.reject('test_error'));
       SimpleLogin.createAccount('test@test.com', 123).catch(cb);
       flush();
       expect(cb).toHaveBeenCalledWith('test_error');
@@ -88,13 +88,13 @@ describe('SimpleLogin', function() {
   //is a stub for the util.js (compare this to the file)
   function fbutilStub() {
     //creates a spy object called fbutil with a ref2 method/object
-    var obj = jasmine.createSpyObj('fbutil', ['ref2']);
+    var fbutil = jasmine.createSpyObj('fbutil', ['ref']);
     //this ref2 object makes a new Firebase with no url for testing
-    obj.$$ref2 = new Firebase();
-    obj.ref2.andCallFake(function() { return obj.$$ref2; });
-    //for testing, flush will flush this out and return back 
-    fbutilStub.$$last = obj;
-    return obj;
+    fbutil.$$ref = new Firebase();
+    fbutil.ref.and.callFake(function() { return fbutil.$$ref; });
+    //for testing, flush will flush this out and return back
+    fbutilStub.$$last = fbutil;
+    return fbutil;
   }
 	function resolve() {
 		var def = $q.defer();
@@ -109,7 +109,7 @@ describe('SimpleLogin', function() {
 		var obj = jasmine.createSpyObj('$firebaseSimpleLogin', list);
 		//insert each list method to include the user provided below as an argument
     angular.forEach(list, function(m) {
-			obj[m].andReturn(resolve(authStub.$$user));
+			obj[m].and.returnValue(resolve(authStub.$$user));
 		});
     //for testing, flush will flush this out and return back
 		authStub.$$last = obj;
@@ -122,7 +122,7 @@ describe('SimpleLogin', function() {
   function flush() {
     try {
       while(true) {
-        fbutilStub.$$last.$$ref2.flush();
+        fbutilStub.$$last.$$ref.flush();
           $timeout.flush();
       }
     }

@@ -1,3 +1,4 @@
+#!/bin/sh
 git config --global user.email "ljschauerman@gmail.com"
 git config --global user.name "Liam Schauerman"
 echo "Getting ready for deployment to heroku"

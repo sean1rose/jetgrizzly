@@ -8,13 +8,13 @@ module.exports = function(config) {
 
   config.set({
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
     // base path, that will be used to resolve files and exclude
     basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery', 'jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -26,11 +26,18 @@ module.exports = function(config) {
       'bower_components/firebase-simple-login/firebase-simple-login.js',
       'bower_components/mockfirebase/dist/mockfirebase.js',
       'bower_components/angularfire/dist/angularfire.min.js',
-      'app/scripts/*.js',
+      'bower_components/ng-lodash/build/ng-lodash.min.js',
+      'app/scripts/config.js',
+      'app/scripts/app.js',
       'app/scripts/**/*.js',
       'test/**/*.js',
-      // 'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      'test/spec/**/*.js',
+      {
+        pattern: 'test/mock/*.json',
+        watched: true,
+        served: true,
+        included: false
+      }
     ],
     // list of files / patterns to exclude
     exclude: [],
@@ -53,6 +60,7 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
+      'karma-jasmine-jquery',
       'karma-jasmine'
     ],
 
@@ -64,7 +72,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_INFO
 
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {

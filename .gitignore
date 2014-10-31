@@ -6,3 +6,6 @@ bower_components
 .idea
 .DS_Store
 npm-debug.log
+!.gitkeep
+dev.json
+app/scripts/config.js

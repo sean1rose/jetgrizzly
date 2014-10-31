@@ -16,7 +16,9 @@ angular.module('jetgrizzlyApp', [
   'jetgrizzlyApp.Room',
   'ui.router',
   'ui.bootstrap',
-  'firebase'
+  'firebase',
+  'ngLodash',
+  'config'
 ])
   .config(function($stateProvider,$urlRouterProvider){
   $urlRouterProvider.otherwise('/');

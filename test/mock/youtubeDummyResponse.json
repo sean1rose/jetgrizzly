@@ -1,0 +1,52 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "\"PSjn-HSKiX6orvNhGZvglLI2lvk/AxLN2f1Hrb_Rg0xc8iUw6R_NDRw\"",
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 1
+  },
+  "items": [
+    {
+
+      "kind": "youtube#video",
+      "etag": "\"PSjn-HSKiX6orvNhGZvglLI2lvk/9nHWj3o7eFXKQucw5OvPBi5sFWo\"",
+      "id": "jxepnIG1yQQ",
+      "snippet": {
+        "publishedAt": "2014-09-29T09:35:55.000Z",
+        "channelId": "UCWqm9TwSzkDlw2H6JAmIYUw",
+        "title": "The Missing Scarf (feat. George Takei)",
+        "description": "→ http://TheMissingScarf.com/\n\nAWARDS –\nWinner, Grand Prize, Toronto Animation Arts Festival Intl., 2014\nWinner, Audience Award, Toronto Animation Arts Festival Intl., 2014\nWinner, Best Animation, Provincetown Intl. Film Festival, 2014\nWinner, Best Short Animation, San Francisco Intl. Film Festival, 2014\nWinner, Best Short Animation, Dallas Intl. Film Festival, 2014\nWinner, Best Short Animation, Reel 2 Real Intl. Film Festival, 2014\nWinner, Best Film, Chicago Irish Film Festival, 2014\nWinner, Best Animation, Ventura Film Festival, 2013\nWinner, Audience Award, Motion Plus, 2013\nWinner, Best Irish Animation, Foyle Film Festival, 2013\nWinner, The Grand Prix Irish, Cork Film Festival, 2013\nWinner, Best Animation, Indie Memphis Film Festival, 2013\nWinner, Best Animation, Savannah Film Festival, 2013\nWinner, Best European Short Film, Seminci, Valladolid Film Festival, 2013\nWinner, Best Animation, New Hampshire Film Festival, 2013\nWinner, Best Animation, Galway Film Fleadh, 2013\nShortlisted, Best Animated Short – 86th Academy Awards, 2014\nNominated, Best Short Film, European Film Awards, 2014\nNominated, Best Short Film, Irish Film & Television Awards (IFTAs), 2014\n\nCREDITS –\nNarrator: George Takei \nWriter / Animator / Director: Eoin Duffy\nProducer: Jamie Hogan\nScript Editor: Richard Duffy\nMusic Company: Echolab\nComposer: Tobias Norberg, Gavin Little (Echolab)\nSound Designers: Gavin Little, Joe McHugh (Echolab)\nPost Production: Windmill Lane\nLegal: Gordon Judge\nAccounting: Stephen Proctor\nFunders Representatives –\nEmma Scott: Production Executive for the Irish Film Board\nPauline McNamara: Executive Producer – RTE\nFionnuala Sweeney: Film Specialist – Arts Council\nJill McGregor: Schemes & Applications Co-ordinator for the Irish Film Board",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/jxepnIG1yQQ/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/jxepnIG1yQQ/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/jxepnIG1yQQ/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/jxepnIG1yQQ/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/jxepnIG1yQQ/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Eoin Duffy",
+        "categoryId": "1",
+        "liveBroadcastContent": "none"
+      }
+    }
+  ]
+}

@@ -8,15 +8,23 @@ module.config(function($stateProvider) {
     url:'/account',
     parent:'app',
     templateUrl:'views/account/account.html',
-    controller:function($scope, user) {
-      $scope.user = user;
-
-    }
+    controller:'ChangePasswordController'
   });
 });
-module.controller('ChangePasswordController', function (SimpleLogin, $state, $scope){
+module.controller('ChangePasswordController', function (SimpleLogin, userPresence, $state, $scope){
+	console.log( $scope.user )
+	// $scope.user = SimpleLogin.getUser();
+	// console.log($scope.user);
 	$scope.changePassword = function(){
-		console.log($scope.user)
+		if($scope.newPass === $scope.newPassConfirm){
+			console.log('new password ok');
+			console.log($scope.user.email, $scope.oldPass, $scope.newPass);
+			console.log('about to run SimpleLogin.changePassword($scope.user.email, $scope.oldPass, $scope.newPass)');
+			debugger;
+			SimpleLogin.changePassword($scope.user.email, $scope.oldPass, $scope.newPass);
+		} else {
+			console.log('Your new passwords do not match')
+		}
 	}
 })
 })();

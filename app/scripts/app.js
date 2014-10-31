@@ -31,7 +31,7 @@ angular.module('jetgrizzlyApp', [
         return SimpleLogin.getUser();
       }
     },
-    controller:function($scope,user, SimpleLogin){
+    controller:function($scope, user, SimpleLogin){
       $scope.user = user;
     }
   });

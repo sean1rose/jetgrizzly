@@ -96,6 +96,15 @@ module.factory('SimpleLogin', ['fbutil', '$timeout', '$window', '$firebaseSimple
           return functions.login(email, pass);
         });
     },
+    changePassword: function(email, oldPassword, newPassword) {
+      auth.$changePassword(email, oldPassword, newPassword, function(error) {
+        if (error === null) {
+          console.log("password changed successfully");
+        } else {
+          console.log("Error changing password:", error);
+        }
+      });
+    }
   };
   // listens for a click of login or logout and then checks if user exists
   $rootScope.$on('firebaseSimpleLogin:login', statusChange);

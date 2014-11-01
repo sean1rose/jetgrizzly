@@ -12,6 +12,7 @@ angular.module('jetgrizzlyApp')
   .controller('VideoQueueController', [
     '$rootScope',
     '$scope',
+    'SimpleLogin',
     'userPresence',
     '$window',
     'config',
@@ -82,9 +83,9 @@ angular.module('jetgrizzlyApp')
         //var utObj = snap.val();
         console.log('utobj? - ', utObj);
 
-        // change whatever needs to be changed in the youTube Firebase object in order to queue up next video (startTime?)
-        utObj.startTime = -1;
-        console.log('startTime is!!! - ', utObj.startTime);
+        // ****change whatever needs to be changed in the youTube Firebase object in order to queue up next video (startTime?)***
+        // utObj.startTime = -1;
+        // console.log('startTime is!!! - ', utObj.startTime);
 
         // upon saving the changes to firebase...
         utObj.$save().then(function(){
@@ -102,18 +103,19 @@ angular.module('jetgrizzlyApp')
     // add to skip counter when skip button is clicked
     $scope.skip = function(){
       // currently-logged-in user (using native AngularFire SimpleLogin)
-      var username = $scope.user.id;
-      console.log($scope.user.id);
+      SimpleLogin.getUser().then(function(results){
+        var username = results.id;
+        if ($scope.skipObject[username] !== true){
+          ++$scope.skipObject.counter;
+          // uncomment line below in order to prevent same user from voting on skipping more than once
+          $scope.skipObject[username] = true;
+        }
+        // pushes changes made to the firebase-server
+        $scope.skipObject.$save().then();
+      });
       console.log('# of users is - ', userPresence.getOnlineUserCount());
 
-      // if current user hasn't already voted, add to skip counter
-      if ($scope.skipObject[username] !== true){
-        ++$scope.skipObject.counter;
-        // uncomment line below in order to prevent same user from voting on skipping more than once
-        $scope.skipObject[username] = true;
-      }
-      // pushes changes made to the firebase-server
-      $scope.skipObject.$save().then();
+      //if current user hasn't already voted, add to skip counter
     };
 
   }]);

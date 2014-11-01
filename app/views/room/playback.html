@@ -21,12 +21,11 @@
         <youtube class="ytvideo" width="{{yt.width}}" height="{{yt.height}}" videoid="{{yt.videoid}}"></youtube>
       </div>
     </div>
-    <button ng-click="skip()">Skip</button>
     <div class="row-fluid videobottom">
     <div class="queue col-xs-12">
-      <form name="queueForm" class="col-xs-12">
-        <div class="col-sm-1 queueList blkbg">
-          <a href="#" class="queueListIcon"><i class="glyphicon glyphicon-list"></i></a>
+      <form name="queueForm" class="queueForm col-xs-12">
+        <div class="col-sm-1 queueList secondclr">
+          <a href="#" class="queueListIcon" ng-click="skip()"><i class="glyphicon glyphicon-remove"></i></a>
         </div>
         <div class="form-group col-sm-10 queueInput">
           <input class="form-control" type="text" ng-model="item" ng-minlength="6" ng-pattern="/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/" name="vidInput" placeholder="Enter a Youtube URL Here">

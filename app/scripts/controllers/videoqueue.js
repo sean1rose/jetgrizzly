@@ -84,13 +84,14 @@ angular.module('jetgrizzlyApp')
         console.log('utobj? - ', utObj);
 
         // ****change whatever needs to be changed in the youTube Firebase object in order to queue up next video (startTime?)***
-        // utObj.startTime = -1;
-        // console.log('startTime is!!! - ', utObj.startTime);
+        utObj.startTime = 0;
+        console.log('startTime is - ', utObj.startTime);
 
         // upon saving the changes to firebase...
         utObj.$save().then(function(){
           // grab user id from Simple Login again
           var username = $scope.user.id;
+          console.log('username in utObj is ', username);
           console.log('next vid loaded successfully / start time change saved successfully');
           // want to change skip obj - counter back to 0
           $scope.skipObject.counter = 0;
@@ -107,15 +108,13 @@ angular.module('jetgrizzlyApp')
         var username = results.id;
         if ($scope.skipObject[username] !== true){
           ++$scope.skipObject.counter;
-          // uncomment line below in order to prevent same user from voting on skipping more than once
-          $scope.skipObject[username] = true;
+          // ***uncomment line below in order to prevent same user from voting on skipping more than once***
+          // $scope.skipObject[username] = true;
         }
         // pushes changes made to the firebase-server
         $scope.skipObject.$save().then();
       });
       console.log('# of users is - ', userPresence.getOnlineUserCount());
-
-      //if current user hasn't already voted, add to skip counter
     };
 
   }]);
